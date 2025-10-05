@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vincent Payment Center ✨</title>
+<style>
+  :root {
+    --bg-dark: #0f2027;
+    --bg-light: #e0eafc;
+    --text-dark: #fff;
+    --text-light: #222;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    transition: all 0.3s ease;
+  }
+
+  body {
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-dark);
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  }
+
+  @media (prefers-color-scheme: light) {
+    body {
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      color: var(--text-light);
+    }
+  }
+
+  .container {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.15);
+    width: 95%;
+    max-width: 460px;
+    text-align: center;
+    animation: fadeIn 1.2s ease;
+    position: relative;
+    z-index: 10;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 15px;
+    margin-bottom: 25px;
+    opacity: 0.8;
+  }
+
+  /* === LOGO V === */
+  .logo {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px;
+    background: url('https://files.catbox.moe/xg20bf.png') center/cover no-repeat;
+    filter: drop-shadow(0 0 25px #00bfff);
+    animation: glow 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { filter: drop-shadow(0 0 15px #00bfff); transform: scale(1); }
+    to { filter: drop-shadow(0 0 35px #00ffff); transform: scale(1.05); }
+  }
+
+  .payment-box {
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: rgba(255,255,255,0.1);
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+
+  .payment-box:hover {
+    transform: translateY(-5px);
+    background: rgba(255,255,255,0.25);
+  }
+
+  .payment-box img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    border-radius: 12px;
+  }
+
+  .number {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .qris img {
+    width: 220px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+    margin-top: 10px;
+  }
+
+  .copy-btn, .action-btn {
+    margin-top: 8px;
+    background: #ffffff25;
+    border: 1px solid #ffffff40;
+    border-radius: 10px;
+    padding: 8px 16px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+
+  .copy-btn:hover, .action-btn:hover {
+    background: #ffffff40;
+    transform: scale(1.05);
+  }
+
+  .actions {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  footer {
+    margin-top: 25px;
+    font-size: 13px;
+    opacity: 0.6;
+  }
+
+  /* Tombol musik */
+  #music-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, background 0.3s ease;
+    z-index: 15;
+  }
+
+  #music-btn:hover {
+    background: rgba(255,255,255,0.35);
+    transform: scale(1.1);
+  }
+
+  /* Efek partikel */
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="container">
+  <div class="logo"></div>
+  <h1>Vincent Payment Center</h1>
+  <p>Pilih metode pembayaran favoritmu</p>
+
+  <div class="payment-box">
+    <img src="https://files.catbox.moe/wdergg.jpeg" alt="DANA">
+    <div class="number" id="dana">08983640582</div>
+    <button class="copy-btn" onclick="copyNumber('dana')">Salin Nomor</button>
+  </div>
+
+  <div class="payment-box">
+    <img src="https://files.catbox.moe/qe8bqy.png" alt="OVO">
+    <div class="number" id="ovo">08983640582</div>
+    <button class="copy-btn" onclick="copyNumber('ovo')">Salin Nomor</button>
+  </div>
+
+  <div class="payment-box">
+    <img src="https://files.catbox.moe/g2i070.jpeg" alt="GoPay">
+    <div class="number" id="gopay">08983640582</div>
+    <button class="copy-btn" onclick="copyNumber('gopay')">Salin Nomor</button>
+  </div>
+
+  <div class="payment-box qris">
+    <h3>QRIS</h3>
+    <img src="https://files.catbox.moe/xg20bf.png" alt="QRIS">
+  </div>
+
+  <div class="actions">
+    <a href"#"><button class="action-btn">🏠 Kembali</button></a>
+    <a href="https://wa.me/628983640582?text=Halo%20Vincent%2C%20saya%20sudah%20melakukan%20pembayaran"><button class="action-btn">💬 Konfirmasi</button></a>
+  </div>
+
+  <footer>© 2025 Vincent Payment Gateway</footer>
+</div>
+
+<!-- Musik -->
+<audio id="bg-music" autoplay loop>
+  <source src="https://files.catbox.moe/7rk2p4.mp3" type="audio/mpeg">
+</audio>
+<button id="music-btn" onclick="toggleMusic()">🎵</button>
+
+<script>
+  const music = document.getElementById("bg-music");
+  const btn = document.getElementById("music-btn");
+  let playing = true;
+
+  function toggleMusic() {
+    if (playing) {
+      music.pause();
+      btn.textContent = "🔇";
+    } else {
+      music.play();
+      btn.textContent = "🎵";
+    }
+    playing = !playing;
+  }
+
+  function copyNumber(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text);
+    alert("Nomor " + text + " berhasil disalin!");
+  }
+
+  // Efek partikel (bintang)
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let numStars = 80;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  for (let i = 0; i < numStars; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 1.5,
+      speed: Math.random() * 0.3 + 0.1
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    stars.forEach(star => {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fill();
+      star.y += star.speed;
+      if (star.y > canvas.height) {
+        star.y = 0;
+        star.x = Math.random() * canvas.width;
+      }
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+
+</body>
+</html>
